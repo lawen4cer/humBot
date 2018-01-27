@@ -17,9 +17,9 @@ import net.dv8tion.jda.core.hooks.EventListener;
 
 
 /*This class will set up the JDA object with token to access our bot
-* in the main method
-* This class will also listen for events and call the appropriate class and handle method when
-* the event is an instance of a certain event that we want to scan for*/
+ * in the main method
+ * This class will also listen for events and call the appropriate class and handle method when
+ * the event is an instance of a certain event that we want to scan for*/
 
 public class Server implements EventListener {
     private static String TOKEN = ""; //this token is the token provided by discord (Insert your bot token here!!!!)
@@ -56,7 +56,11 @@ public class Server implements EventListener {
             User user = ((UserGameUpdateEvent) event).getUser();
             Game game = ((UserGameUpdateEvent) event).getCurrentGame();
             Guild guild = ((UserGameUpdateEvent) event).getGuild();
-            gameEventChange.handleGameEventChange(user, game, guild);
+
+            if (((UserGameUpdateEvent) event).getPreviousGame().getType() != Game.GameType.STREAMING) {
+                gameEventChange.handleGameEventChange(user, game, guild);
+
+            }
         }
     }
 
